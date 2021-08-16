@@ -18,6 +18,11 @@ view: model_info {
     sql: ${TABLE}.data_column ;;
   }
 
+  dimension: series_id_column {
+    type: string
+    sql: ${TABLE}.series_id_column ;;
+  }
+
   dimension: horizon {
     type: number
     sql: ${TABLE}.horizon ;;

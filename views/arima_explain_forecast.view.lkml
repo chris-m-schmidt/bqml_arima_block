@@ -49,6 +49,10 @@ view: arima_explain_forecast {
     sql: ${TABLE}.time_series_adjusted_data ;;
   }
 
+  dimension: cost_center {
+    type: string
+  }
+
   dimension: standard_error {
     type: number
     sql: ${TABLE}.standard_error ;;
@@ -133,7 +137,7 @@ view: arima_explain_forecast {
   measure: total_time_series_data {
     type: sum
     sql: ${time_series_data} ;;
-    value_format_name: decimal_4
+    value_format_name: usd_0
   }
 
   measure: total_time_series_adjusted_data {

@@ -33,6 +33,11 @@ view: arima_forecast {
     convert_tz: no
   }
 
+  dimension: cost_center {
+    type: string
+    sql: ${TABLE}.cost_center ;;
+  }
+
   dimension: forecast_value {
     hidden: yes
     type: number

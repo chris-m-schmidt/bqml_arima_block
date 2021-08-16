@@ -9,6 +9,7 @@ view: arima_create_model {
       sql_step: CREATE OR REPLACE VIEW @{looker_temp_dataset_name}.{% parameter model_name.select_model_name %}_arima_training_data_{{ _explore._name }}
                     AS  SELECT {% parameter arima_training_data.select_time_column %}
                           , {% parameter arima_training_data.select_data_column %}
+                          , {% parameter arima_training_data.select_series_column %}
                         FROM ${input_data.SQL_TABLE_NAME}
       ;;
 
@@ -16,6 +17,7 @@ view: arima_create_model {
                   OPTIONS(MODEL_TYPE = 'ARIMA_PLUS'
                     , time_series_timestamp_col = '{% parameter arima_training_data.select_time_column %}'
                     , time_series_data_col = '{% parameter arima_training_data.select_data_column %}'
+                    , time_series_id_col = '{% parameter arima_training_data.select_series_column %}'
 
                     {% if arima_hyper_params.set_horizon._parameter_value == 1000 %}
                     {% else %}
@@ -35,6 +37,7 @@ view: arima_create_model {
                   (model_name     STRING,
                   time_column     STRING,
                   data_column     STRING,
+                  series_id_column STRING,
                   horizon         INT64,
                   holiday_region  STRING,
                   created_at      TIMESTAMP,
@@ -45,6 +48,7 @@ view: arima_create_model {
                 USING (SELECT '{% parameter model_name.select_model_name %}' AS model_name
                         , '{% parameter arima_training_data.select_time_column %}' AS time_column
                         , '{% parameter arima_training_data.select_data_column %}' AS data_column
+                        , '{% parameter arima_training_data.select_series_column %}' AS series_id_column
                         , {% parameter arima_hyper_params.set_horizon %} AS horizon
                         , '{% parameter arima_hyper_params.set_holiday_region %}' AS holiday_region
                         , CURRENT_TIMESTAMP AS created_at
@@ -54,12 +58,13 @@ view: arima_create_model {
                 WHEN MATCHED THEN
                   UPDATE SET time_column=S.time_column
                   , data_column=S.data_column
+                  , series_id_column=S.series_id_column
                   , horizon=S.horizon
                   , holiday_region=S.holiday_region
                   , created_at=S.created_at
                 WHEN NOT MATCHED THEN
-                  INSERT (model_name, time_column, data_column, horizon, holiday_region, created_at, explore)
-                  VALUES(model_name, time_column, data_column, horizon, holiday_region, created_at, explore)
+                  INSERT (model_name, time_column, data_column, series_id_column, horizon, holiday_region, created_at, explore)
+                  VALUES(model_name, time_column, data_column, series_id_column, horizon, holiday_region, created_at, explore)
       ;;
     }
   }

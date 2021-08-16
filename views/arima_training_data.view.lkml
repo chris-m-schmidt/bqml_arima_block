@@ -18,4 +18,14 @@ view: arima_training_data {
     suggest_explore: field_suggestions
     suggest_dimension: field_suggestions.column_name
   }
+
+  parameter: select_series_column {
+    label: "Select the Series Field (REQUIRED)"
+    description: "Choose the field that contains the field you want this data forecasted for."
+    type: unquoted
+    suggest_explore: field_suggestions
+    suggest_dimension: field_suggestions.column_name
+  }
+
+
 }
