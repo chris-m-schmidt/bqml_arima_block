@@ -5,7 +5,6 @@ view: +input_data {
     sql:  SELECT
             cost_center.cost_center  AS cost_center,
             cost_center.cost_center_owner  AS cost_center_owner,
-            cost_center.resource_and_projects  AS resource_and_projects,
             (unified_cloud_billing.usage_start_date ) AS usage_start_date,
             COALESCE(SUM(( unified_cloud_billing.cost*200  ) ), 0) AS total_cost
           FROM `mw-alpha-cloud-cost-usage.cloud_cost_final.unified_cloud_billing_date_impute` AS unified_cloud_billing
@@ -16,7 +15,7 @@ view: +input_data {
           THEN 'SNS Project'
           ELSE COALESCE(project.project_name,(CASE WHEN LENGTH(service.service_id) = 0 THEN 'SNS Project' ELSE service.service_id END)) END) = cost_center.resource_and_projects
           GROUP BY
-           1,2,3,4
+           1,2,3
     ;;
   }
 
@@ -53,6 +52,13 @@ view: +input_data {
   dimension: total_cost {
     type: number
     sql: ${TABLE}.total_cost ;;
+  }
+
+  measure: sum_of_cost {
+    label: "Total Cost"
+    type: sum
+    sql: ${total_cost} ;;
+    value_format_name: usd_0
   }
 
   measure: count {
