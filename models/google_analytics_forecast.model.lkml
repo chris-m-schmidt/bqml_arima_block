@@ -7,7 +7,7 @@ include: "/use_case_refinements/google_analytics_forecast/*"
 explore: google_analytics_forecast {
   label: "BQML ARIMA Plus: Google Analytics Forecast"
   description: "Use this Explore to create BQML ARIMA Plus models to forecast various metrics using Google Analytics data"
-
+  hidden: yes
   extends: [bqml_arima]
 
   join: arima_forecast {
