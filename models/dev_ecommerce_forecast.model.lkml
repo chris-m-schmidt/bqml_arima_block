@@ -3,8 +3,8 @@ connection: "@{database_connection}"
 include: "/explores/bqml_arima.explore"
 include: "/use_case_refinements/ecommerce_forecast/*"
 
-
-explore: ecommerce_forecast {
+explore: old_ecommerce_forecast {
+#explore: ecommerce_forecast {
   label: "BQML ARIMA Plus: eCommerce Forecast"
   description: "Use this Explore to create BQML ARIMA Plus models to forecast various metrics using Looker's eCommerce dataset"
   hidden: yes

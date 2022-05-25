@@ -3,8 +3,8 @@ connection: "@{database_connection}"
 include: "/explores/bqml_arima.explore"
 include: "/use_case_refinements/cost_management_forecast/*"
 
-
-explore: cost_management_forecast {
+explore: old_cost_management_forecast {
+#explore: cost_management_forecast {
   label: "BQML ARIMA Plus: Cost Management Forecast"
   description: "Use this Explore to create BQML ARIMA Plus models to forecast various metrics using Looker's Cost Management dataset"
   hidden: yes

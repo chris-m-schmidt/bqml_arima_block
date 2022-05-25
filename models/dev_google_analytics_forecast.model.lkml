@@ -3,8 +3,8 @@ connection: "@{database_connection}"
 include: "/explores/bqml_arima.explore"
 include: "/use_case_refinements/google_analytics_forecast/*"
 
-
-explore: google_analytics_forecast {
+explore: old_google_analytics_forecast {
+# explore: google_analytics_forecast {
   label: "BQML ARIMA Plus: Google Analytics Forecast"
   description: "Use this Explore to create BQML ARIMA Plus models to forecast various metrics using Google Analytics data"
   hidden: yes
